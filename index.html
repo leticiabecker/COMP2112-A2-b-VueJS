@@ -15,10 +15,29 @@
     <link rel="stylesheet" href="css/layouts/email.css">
     <!--<![endif]-->
     <link rel="stylesheet" href="css/layouts/custom.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 
 </head>
 
 <body>
+    <div>Search</div>
     <div id="app">
         <div id="layout" class="content pure-g">
             <div id="nav" class="pure-u">
@@ -102,12 +121,24 @@
                             <button class="secondary-button pure-button">Reply</button>
                             <button class="secondary-button pure-button">Forward</button>
                             <button class="secondary-button pure-button" @click="deleteEmail(filteredEmails[selectedEmail].id)">{{ this.currentFolder === 'inbox' ? 'Delete' : 'Deleted'}}</button>
+                            <button class="secondary-button pure-button" @click="speak('speak')">
+                                {{ this.speaking === true ? 'Speaking' : 'Speak'}}
+                            </button>
+                            <button class="secondary-button pure-button" id="stop" @click="speak('stop')">Stop</button>
                         </div>
                     </div>
 
                     <div class="email-content-body">
                         {{ filteredEmails[selectedEmail].body }}
                     </div>
+                    <div class="address">
+                        Postal Code:
+                        <span class="postalCode">{{ filteredEmails[selectedEmail].postalcode }}</span>
+                    </div>
+
+                    <google-map name="map"></google-map>
+                    <div id="warnings-panel"></div>
+                    <!-- /#map -->
                 </div>
             </div>
 
@@ -116,6 +147,8 @@
     <!-- /#app -->
 
     <!-- Scripts -->
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-WaMAosU5oj7P8V8zeET2xO_K4GnsGXs"></script>
     <!-- Vue.js -->
     <script src="https://unpkg.com/vue"></script>
     <script src="https://yui-s.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
@@ -135,7 +168,6 @@
 
         });
     </script>
-
 </body>
 
 </html>
